@@ -125,6 +125,7 @@ stdav = 10**(-21)
 h0min = h0_min*stdav
 h0max = h0_max*stdav
 h0_array = np.linspace(h0min,h0max,h0_vals_num)
+print h0_array
 invSigma0 = np.array([[(1./sigmaA**2), 0.], [0., (1./sigmaA**2)]])
 detSigma0 = sigmaA**4
 dX = newstrainH0
@@ -149,6 +150,7 @@ for k in range(len(psi_array)):
 		FpY[k][i] = FpY0[i]*cos2pi[k] + FcY0[i]*sin2pi[k]
 		FcY[k][i] = FcY0[i]*cos2pi[k] - FpY0[i]*sin2pi[k]
 del FpX0, FcX0, FpY0, FcY0, cos2pi, sin2pi
+
 for i in range(num_points):
 	d = np.array([newstrainH0[i], newstrainL0[i]])
 	d.shape = (2,1)
@@ -164,13 +166,18 @@ for i in range(num_points):
 	sigmaY = np.std(newstrainL0[int0:int1])
 	C = np.array([[sigmaX**2, 0.], [0., sigmaY**2]])
 	invC = np.array([[(1./sigmaX**2), 0.], [0., (1/sigmaY**2)]])
+	print 'invC', invC
+	print 'sigmaX', sigmaX
 	detC = sigmaX**2 * sigmaY**2
 	for j in range(len(h0_array)):
 		for k in range(len(psi_array)):
 			M = h0_array[j]*np.array([[FpX[k][i], FpY[k][i]], [FcX[k][i], FcY[k][i]]])
 			M = np.array([[M[0][0][0],M[0][1][0]],[M[1][0][0], M[1][1][0]]])
+			print 'M',M
 			invSigma = np.dot(M.T, np.dot(invC, M)) + invSigma0
+			print 'invSigma', invSigma
 			Sigma = np.linalg.inv(invSigma)
+			print 'Sigma', Sigma
 			detSigma = np.linalg.det(Sigma)
 			chi = np.dot(Sigma, np.dot(M.T, np.dot(invC, d)))
 			ppsi[k]    = 0.5*np.log(detSigma) - 0.5*np.log(16.*np.pi**4*detSigma0*detC) -  0.5*(np.vdot(d.T, np.dot(invC, d)) + np.vdot(chi.T, np.dot(invSigma, chi)))
