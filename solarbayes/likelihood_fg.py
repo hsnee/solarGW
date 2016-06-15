@@ -121,7 +121,7 @@ for i in range(numseg+1):
 psi_array = np.linspace(0,np.pi,10)
 dpsi = psi_array[1]-psi_array[0]
 sigmaA = 500.0
-stdav = 10**(-21)
+stdav = np.power(10,-21,dtype=float)
 h0min = h0_min*stdav
 h0max = h0_max*stdav
 h0_array = np.linspace(h0min,h0max,h0_vals_num)
