@@ -147,16 +147,10 @@ def validity_test(starttime, endtime, h0_max=0.001):
 	print 'Finding likelihood Part 1/2'
 	psi_array = np.linspace(0,np.pi,10)
 	dpsi = psi_array[1]-psi_array[0]
-<<<<<<< HEAD
 	sigmaA = 10.0
 	stdav = np.power(10,-21,dtype=float)
 	h0min = h0_min*stdav
 	h0max = h0_max*stdav
-=======
-	sigmaA = 1.0
-	h0min = h0_min*np.std(newstrainH)
-	h0max = h0_max*np.std(newstrainH)
->>>>>>> 13781147b329f62e789608277e7fc55faacbc3a5
 	h0_array = np.linspace(h0min,h0max,h0_vals_num)
 	invSigma0 = np.array([[(1./sigmaA**2), 0.], [0., (1./sigmaA**2)]])
 	detSigma0 = sigmaA**4
