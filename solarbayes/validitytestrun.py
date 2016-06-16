@@ -96,7 +96,7 @@ def validity_test(starttime, endtime, h0_max=0.001):
         numseg = int((durationH)/600)
         segs = np.linspace(0,numseg,numseg+1)*600
         segs = segs + newtimeL[0]
-	psi1=np.pi/4
+	psi1 = np.pi/4
         ra,dec,fp,fc = [[0 for _ in range(numseg+1)] for _ in range(4)]
         for i in range(numseg+1):
                 coordstime = segs[i]
@@ -122,7 +122,6 @@ def validity_test(starttime, endtime, h0_max=0.001):
 	for i in range(len(newtdelay)):
 		tdelayidx[i] = int(newtdelay[i]*Xspacing)
 	idxmax= np.max(tdelayidx)
-	print len(newtdelay), len(newstrainL)
 	newstrainL0,newstrainH0 = [[0 for _ in range(len(newtdelay)-idxmax)] for _ in range(2)]
 	for i in range(idxmax,len(newtdelay)):
 		newstrainL0[i-idxmax]=newstrainL[i-tdelayidx[i]]
@@ -132,7 +131,7 @@ def validity_test(starttime, endtime, h0_max=0.001):
 	newstrainL0 = newstrainL0 + fakeL
 	del newstrainL, newstrainH, fakeL, fakeH
 	# H1 and L1 are now in sync and filtered between 100 and 150 Hz.
-	del FcX,FcX0,FpX,FpX0,FcY,FcY0,FpY,FpY0
+	del FcX0,FpX0,FcY0,FpY0
 	#----- Applying a bandpass filter -----#
 	print 'Filtering data'
 	coefsL = get_filter_coefs('L1')
@@ -149,8 +148,9 @@ def validity_test(starttime, endtime, h0_max=0.001):
 	psi_array = np.linspace(0,np.pi,10)
 	dpsi = psi_array[1]-psi_array[0]
 	sigmaA = 10.0
-	h0min = h0_min*np.std(newstrainH)
-	h0max = h0_max*np.std(newstrainH)
+	stdav = np.power(10,-21,dtype=float)
+	h0min = h0_min*stdav
+	h0max = h0_max*stdav
 	h0_array = np.linspace(h0min,h0max,h0_vals_num)
 	invSigma0 = np.array([[(1./sigmaA**2), 0.], [0., (1./sigmaA**2)]])
 	detSigma0 = sigmaA**4
