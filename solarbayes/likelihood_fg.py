@@ -1,8 +1,10 @@
-#!/usr/bin/env python
+1;95;0c#!/usr/bin/env python
 
 #------- Packages ---------#
 import numpy as np
 import astropy, gwpy, h5py, lal, sys, os
+from matplotlib.backends.backend_pdf import PdfPages
+import matplotlib.pyplot as plt
 from astropy.coordinates import get_sun
 import astropy.time as Time
 from matplotlib.backends.backend_pdf import PdfPages
@@ -105,6 +107,14 @@ for i in range(idxmax,len(newtdelay)):
 newstrainH0=newstrainH[0:len(newstrainL0)]
 del newstrainL, newstrainH
 
+
+### plot the data at this point
+with PdfPages('plot1.pdf') as pdf:
+	fig1 = plt.figure()
+	plt.plot(newtimeL,newstrainL0)
+	plt.plot(newtimeH,newstrainH0)
+	pdf.savefig(fig1)
+	plt.close()
 ############################################################
 #------------ Finding probability distribution ------------#
 #   ------------ Defining some stuff for p -------------   #
