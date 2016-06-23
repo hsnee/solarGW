@@ -49,7 +49,7 @@ coefsH  = get_filter_coefs('H1')
 strainL = filter_data(strainL,coefsL)
 strainH = filter_data(strainH,coefsH)
 timeH   = np.arange(starttime, endtime, Xspacing)
-timeL   = timeH
+timeL   = timeH.copy()
 detMap  = {'H1': lal.LALDetectorIndexLHODIFF, 'L1':
 lal.LALDetectorIndexLLODIFF}
 detH1  = lal.CachedDetectors[detMap['H1']]
